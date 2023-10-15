@@ -4,16 +4,16 @@ metadata:
   name: tutorial
 spec:
   ports:
-  - name: 80-tcp
-    port: 80
-    protocol: TCP
-    targetPort: 80
+    - name: 80-tcp
+      port: 80
+      protocol: TCP
+      targetPort: 80
   selector:
     com.docker.project: tutorial
   type: LoadBalancer
 status:
   loadBalancer: {}
- 
+
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -34,11 +34,18 @@ spec:
         com.docker.project: tutorial
     spec:
       containers:
-      - image: docker/getting-started
-        name: tutorial
-        ports:
-        - containerPort: 80
-          protocol: TCP
-        resources: {}
+        # - image: docker/getting-started
+        #   name: tutorial
+        #   ports:
+        #     - containerPort: 80
+        #       protocol: TCP
+        #   resources: {}
+        - image: hello-docker:1.0.0
+          name: hello-docker
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          resources: {}
+          imagePullPolicy: IfNotPresent
       restartPolicy: Always
 status: {}
